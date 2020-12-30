@@ -1,0 +1,12 @@
+sample_id,antigen,start_position,end_position,clone_consensus,antigen_sequence,antigen_matches_consensus,priority_within_antigen,num_clones,clones,redundant
+sample_a,ORF7b,20,36,VLIMLIIFWFSLELQD,VLIMLIIFWFSLELQD,True,1,2,"['ORF7b_16', 'ORF7b_20']",False
+sample_a,S,740,748,YICGDSTE,YICGDSTE,True,1,8,"['S_728', 'S_732', 'S_736', 'S_740', 'S_redundant_728', 'S_redundant_732', 'S_redundant_736', 'S_redundant_740']",False
+sample_a,S_redundant,740,748,YICGDSTE,YICGDSTE,True,1,8,"['S_728', 'S_732', 'S_736', 'S_740', 'S_redundant_728', 'S_redundant_732', 'S_redundant_736', 'S_redundant_740']",True
+sample_b,E,44,52,NIVNV.LV,NIVNVSLV,True,1,13,"['E_32', 'E_36', 'E_40', 'E_44', 'E2_32', 'E2_36', 'E2_40', 'E3_36', 'E3_40', 'E3_44', 'E4_32', 'E4_36', 'E4_40']",False
+sample_b,E,8,20,TGTLIVNSVLLF,TGTLIVNSVLLF,True,2,3,"['E_0', 'E_4', 'E_8']",False
+sample_b,E2,44,52,N.VNV.LV,NQVNVKLV,True,1,13,"['E_32', 'E_36', 'E_40', 'E2_32', 'E2_36', 'E2_40', 'E2_44', 'E3_36', 'E3_40', 'E3_44', 'E4_32', 'E4_36', 'E4_40']",True
+sample_b,E2,8,20,TGTLIVNSVLLF,TGTLVVNSVLLF,False,2,3,"['E_0', 'E_4', 'E_8']",True
+sample_b,E3,45,53,N.VNV.LV,NIVNVQLV,True,1,13,"['E_32', 'E_36', 'E_40', 'E2_32', 'E2_36', 'E2_40', 'E2_44', 'E3_36', 'E3_40', 'E3_44', 'E4_32', 'E4_36', 'E4_40']",True
+sample_b,E3,8,21,TGTL-IVNSVLLF,TGTLIIVNSVLLF,False,2,2,"['E_0', 'E_8']",True
+sample_b,E4,44,51,IVNV.LV,IVNVNLV,True,1,13,"['E_32', 'E_36', 'E_40', 'E2_32', 'E2_36', 'E2_40', 'E3_36', 'E3_40', 'E3_44', 'E4_32', 'E4_36', 'E4_40', 'E4_44']",True
+sample_b,E4,8,27,TGTLIVNSVLLFLAFVVFL,TGTLVNSVLLFLAFVVFLL,False,2,1,['E_8'],True
