@@ -8,20 +8,28 @@ shared part of their sequences).
 We first convert scores to percentile ranks. By percentile rank we mean a
 number between 0 and 1 where higher scores have lower ranks. The highest score
 in the scores matrix has percentile rank 0. We are looking for clones that have
-low enough percentile ranks to be significant.
+low enough percentile ranks to be significant. If we draw a clone at random,
+its percent rank R is distributed as Uniform(0,1).
 
-For each sample and *pair* of phage clones that have
-overlapping sequences (as determined by BLAST), we consider the
-percentile rank of the corresponding scores and compute r = max(r1, r2).
-Let the null hypothesis be that r1 and r2 are both drawn from a uniform [0,1]
-distribution. Under the null hypothesis, Prob[r < k] = k^2.
+For each sample and *pair* of phage clones that have overlapping sequences
+(as determined by BLAST), we consider the percentile rank of the clones.
+Call these ranks R1 and R2. Intuitively, if these are both very low then we
+want to call a hit. Our null hypothesis informally is that R1 and R2 are
+independent, since our key assumption is that clones that share sequence will
+be correlated only when there is a real antibody response to their shared
+sequence.
 
-We can therefore take p=r^2 to be the p-value for this pair of clones.
-It indicates the probability of observing two clones with percentile ranks as low
-as these under the null hypothesis.
+More formally, we define the null hypothesis to be that the joint distribution
+of (R1, R2) is the 2-dimensional unit uniform distribution. We define
+R = max(R1, R2) as a test statistic. Under the null hypothesis, for any constant
+k, Prob[R < k] = k^2, since this is just the probability of sampling two values
+both less than k from a unit uniform distribution.
+
+We can therefore take p=R^2 to be the p-value for this pair of clones.
+It gives the probability of observing two clones with percentile ranks as
+low as these under the null hypothesis.
 
 These p-values are reported as q values after Benjamini-Hochberg FDR correction.
-
 '''
 from __future__ import (
     print_function,
