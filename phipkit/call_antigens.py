@@ -11,6 +11,43 @@ of antigens all supported by the same hit clones (i.e. the same clones align to
 multiple antigens), the one with the most hits will be called non-redundant
 and the rest are labelled redundant.
 
+The result file from this analysis has the following columns:
+
+    sample_id
+        The sample name
+
+    antigen
+        Protein identifier
+
+    start_position, end_position
+        Position range in the protein that is being called an epitope
+
+    clone_consensus
+        Consensus sequence of phip-seq clones that are hits and align to the
+        given position range
+
+    antigen_sequence
+        Protein sequence for the given position range
+
+    antigen_matches_consensus
+        Whether the clone consensus sequence matches the antigen sequence.
+        This is experimental and probably best ignored at this point.
+
+    priority_within_antigen
+        For proteins that have multiple epitopes called, they ranked according
+        to the amount of evidence for them. 1 is the highest priority, 2 is
+        lower priority, etc.
+
+    num_clones
+        Number of phip-seq clones (hits) that support this epitope
+
+    clones
+        List of phip-seq clones (hits) that support this epitope
+
+    redundant
+        Whether this antigen (protein) is determined to be redundant with other
+        antigens.
+
 '''
 from __future__ import (
     print_function,
