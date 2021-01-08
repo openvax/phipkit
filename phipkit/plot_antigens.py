@@ -87,7 +87,7 @@ def run(argv=sys.argv[1:]):
         samples_per_antigen = antigens_df.groupby("antigen").sample_id.nunique()
         selected_antigens = samples_per_antigen[
             samples_per_antigen  >= args.min_samples
-        ].index.values
+        ].index
         say("Selected antigens", selected_antigens)
         antigens_df = antigens_df.loc[
             antigens_df.antigen.isin(selected_antigens)
