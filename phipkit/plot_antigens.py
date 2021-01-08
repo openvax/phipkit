@@ -49,6 +49,12 @@ parser.add_argument(
     help="Process only N antigens. For debugging.")
 
 parser.add_argument(
+    "--min-samples",
+    type=int,
+    metavar="N",
+    help="Process only antigens with hits in at least N samples")
+
+parser.add_argument(
     "--include-redundant",
     action="store_true",
     default=False,
@@ -75,6 +81,18 @@ def run(argv=sys.argv[1:]):
     say("Reading antigen calls")
     antigens_df = pandas.read_csv(args.antigen_calls)
     say("Read antigen calls:\n", antigens_df)
+
+    if args.min_samples:
+        say("Subselecting to antigens with >=", args.min_samples, "samples")
+        samples_per_antigen = antigens_df.groupby("antigen").sample_id.nunique()
+        selected_antigens = samples_per_antigen[
+            samples_per_antigen  >= args.min_samples
+        ].index.values
+        say("Selected antigens", selected_antigens)
+        antigens_df = antigens_df.loc[
+            antigens_df.antigen.isin(selected_antigens)
+        ]
+        print(antigens_df)
 
     if args.max_antigens:
         say("Subselecting to", args.max_antigens, "antigens.")
