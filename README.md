@@ -129,7 +129,7 @@ $ phipkit-score counts.csv --out scores.csv
 Example results: [scores.csv](example-data/scores.csv).
 
 
-### Step 3. Call hits
+### Step 4. Call hits
 
 This step identifies phage clones (actually pairs of phage clones with
 overlapping sequences) that have high enough scores to be called hits.
@@ -146,7 +146,7 @@ $ phipkit-call-hits blast.all_against_all.csv scores.csv --counts counts.csv --f
 Example results: [hits.csv](example-data/hits.csv).
 
 
-### Step 4. Call antigens
+### Step 5. Call antigens
 
 This step looks for regions of source proteins that have multiple overlapping
 hits. It's implemented in [call_antigens.py](phipkit/call_antigens.py).
@@ -158,7 +158,7 @@ $ phipkit-call-antigens blast.reference.csv hits.csv --out antigens.csv
 Example results: [antigens.csv](example-data/antigens.csv).
 
 
-### Step 5 (optional). Plot antigen calls
+### Step 6 (optional). Plot antigen calls
 
 Some rudimentary plotting support is also available.
 
