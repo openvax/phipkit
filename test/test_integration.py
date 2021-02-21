@@ -12,7 +12,7 @@ import pandas
 from phipkit.blast import run_blast
 from phipkit.score import compute_scores
 from phipkit.call_hits import call_hits
-from phipkit.call_antigens import call_antigens
+from phipkit.call_antigens import call_antigens, hits_to_dict
 from phipkit.plot_antigens import plot_antigens
 
 #random.seed(42)
@@ -232,7 +232,7 @@ def test_integrated(save_dir=None):
     yield assert_less, (~epitopes_df.discovered).mean(), 0.5
 
     print("Calling antigens")
-    antigens_df = call_antigens(reference_blast_df, hits_df)
+    antigens_df = call_antigens(reference_blast_df, hits_to_dict(hits_df))
     print(antigens_df)
 
     antigens_df["expected_hits"] = [
@@ -294,7 +294,8 @@ def test_integrated(save_dir=None):
     # Call using the pairwise reference and check that we recover the special
     # epitope.
     print("Calling antigens using pairwise reference")
-    antigens_pairwise_df = call_antigens(pairwise_blast_df, hits_df)
+    antigens_pairwise_df = call_antigens(
+        pairwise_blast_df, hits_to_dict(hits_df))
     print(antigens_pairwise_df)
     sample_b = antigens_pairwise_df.loc[
         (antigens_pairwise_df.sample_id == "sample_b")

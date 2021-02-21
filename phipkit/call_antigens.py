@@ -160,12 +160,24 @@ def run(argv=sys.argv[1:]):
 
     results_df = call_antigens(
         blast_df=blast_df,
-        hits_df=hits_df,
+        sample_to_clones=hits_to_dict(hits_df),
         min_clones_per_antigen=args.min_clones_per_antigen)
 
     say("Writing overlap hits.")
     results_df.to_csv(args.out, index=False)
     say("Wrote: ", args.out)
+
+
+def hits_to_dict(hits_df):
+    """
+    Given a hits_df, return a dict of sample id -> list of hits
+    """
+    sample_to_clones = {}
+    for sample, sub_hits_df in hits_df.groupby("sample_id"):
+        sample_to_clones[sample] = sub_hits_df[
+            ["clone1", "clone2"]
+        ].stack().unique()
+    return sample_to_clones
 
 
 def find_consensus(sequences, threshold=0.7):
@@ -318,8 +330,24 @@ def analyze_antigen_for_sample(
     return result_df
 
 
-def call_antigens(blast_df, hits_df, min_clones_per_antigen=2):
-    clones = hits_df[["clone1", "clone2"]].stack().unique()
+def call_antigens(blast_df, sample_to_clones, min_clones_per_antigen=2):
+    """
+    blast_df : pandas.DataFrame
+        Blast hits, phage clones to antigens.
+        Expected columns: program, version, search_target, clone, len, hit_num,
+        id, accession, title, hsp_num, bit_score, score, evalue, identity,
+        positive, query_from, query_to, hit_from, hit_to, align_len, gaps,
+        qseq, hseq, midline
+    sample_to_clones : dict of string -> list of string
+        Hits. Each sample ID mapped to a list of hit clones
+    min_clones_per_antigen : int
+        Number of clones required to call a hit for an antigen.
+    """
+    sample_to_clones = pandas.Series(sample_to_clones)
+    clones = set()
+    for values in sample_to_clones.values:
+        clones.update(values)
+    clones = sorted(clones)
     say("Calling antigens. Unique clones:", len(clones), clones)
 
     sub_blast_df = blast_df.loc[blast_df.clone.isin(clones)]
@@ -339,10 +367,7 @@ def call_antigens(blast_df, hits_df, min_clones_per_antigen=2):
         antigens_df = pandas.DataFrame(columns=RESULT_COLUMNS)
     else:
         antigens_dfs = []
-        for (sample_id, sub_hits_df) in tqdm(
-                hits_df.groupby("sample_id"), total=hits_df.sample_id.nunique()):
-
-            sample_clones = sub_hits_df[["clone1", "clone2"]].stack().unique()
+        for (sample_id, sample_clones) in tqdm(sample_to_clones.items()):
             missing_clones = [
                 c for c in sample_clones if c not in clone_to_antigens
             ]

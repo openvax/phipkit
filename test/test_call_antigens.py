@@ -7,7 +7,7 @@ import numpy
 import pandas
 import io
 
-from phipkit.call_antigens import call_antigens, find_consensus, analyze_antigen_for_sample
+from phipkit.call_antigens import find_consensus, analyze_antigen_for_sample
 
 
 def test_find_consensus(repeats=1000):
