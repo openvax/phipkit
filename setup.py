@@ -55,7 +55,7 @@ if __name__ == '__main__':
         'scikit-bio',
         'dna_features_viewer',
         'tqdm',
-        'np_utils',
+        'statsmodels',
         'suffix-trees',
     ]
 

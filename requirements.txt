@@ -4,5 +4,5 @@ scikit-learn
 scikit-bio
 dna_features_viewer
 tqdm
-np_utils
 suffix-trees
+statsmodels
