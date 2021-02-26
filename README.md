@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/openvax/phipkit.svg?branch=main)](https://travis-ci.com/openvax/phipkit)
+
 # phipkit
 PhIP-seq data analysis toolkit
 
