@@ -176,3 +176,14 @@ $ phipkit-plot-antigens blast.reference.csv hits.csv antigens.csv --out antigens
 
 Example results: [antigens.pdf](example-data/antigens.pdf).
 
+## Contributing
+PRs with bugfixes or new functionality are welcome. Before embarking on a major
+change, please file an issue.
+
+To push a new release to PyPI:
+* Make sure the package version specified in [`__init__.py`](https://github.com/timodonnell/yabul/blob/main/yabul/__init__.py)
+is a new version greater than what's on [PyPI](https://pypi.org/project/yabul/).
+* Tag a new release on GitHub matching this version
+
+Travis should deploy the release to PyPI automatically.
+
