@@ -17,7 +17,13 @@ control comparisons or other analyses appropriate to the study.
 ## Installation
 
 All dependencies except BLAST (required by `phipkit-blast` command) can be
-installed by pip. Run this from a checkout of the repo:
+installed by pip:
+
+```
+$ pip install phipkit
+```
+ 
+or from a checkout of the repo:
 
 ```
 $ pip install .
