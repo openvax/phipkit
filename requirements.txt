@@ -1,8 +1,4 @@
-six
-pandas>=0.20.3
-scikit-learn
-scikit-bio
+pandas
 dna_features_viewer
 tqdm
-suffix-trees
 statsmodels
