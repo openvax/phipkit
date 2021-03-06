@@ -2,14 +2,19 @@
 phipkit - analysis package for Phage Immunoprecipitation Sequencing (phip-seq)
 """
 
-__version__ = "0.0.1"
-from .antigen_analysis import AntigenAnalysis
-from .call_antigens import call_antigens
-from .call_hits import call_hits
-from .score import compute_scores
+__version__ = "0.0.2"
+from . import antigen_analysis
+from . import call_antigens
+from . import call_hits
+from . import common
+from . import plot_antigens
+from . import score
 
 __all__ = [
-    "AntigenAnalysis",
+    "antigen_analysis",
     "call_antigens",
-    "compute_scores",
+    "call_hits",
+    "common",
+    "plot_antigens",
+    "score",
 ]
