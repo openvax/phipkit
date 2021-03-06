@@ -305,7 +305,6 @@ def test_integrated(save_dir=None):
     assert os.path.exists(out)
 
 
-
 if __name__ == "__main__":
     import sys
     import argparse

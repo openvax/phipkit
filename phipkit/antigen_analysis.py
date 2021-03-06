@@ -66,22 +66,17 @@ def compute_coverage(antigen, sequence, blast_df):
 
 
 class AntigenAnalysis(object):
-    def __init__(self, blast_df, antigens_df, hits_df=None, sample_to_kind=None):
+    def __init__(self, blast_df, antigens_df, sample_to_hit_clones, sample_to_kind=None):
         self.blast_df = blast_df
         self.antigens_df = antigens_df
-        self.hits_df = hits_df
         self.sample_to_kind = sample_to_kind
 
-        say("Collecting hits.")
-        self.sample_to_hit_clones = collections.defaultdict(set)
-        all_clones = set()
-        for _, row in tqdm(self.hits_df.iterrows(), total=len(self.hits_df)):
-            self.sample_to_hit_clones[row.sample_id].add(row.clone1)
-            self.sample_to_hit_clones[row.sample_id].add(row.clone2)
-            all_clones.add(row.clone1)
-            all_clones.add(row.clone2)
         self.sample_to_hit_clones = dict(
-            (k, list(v)) for (k, v) in self.sample_to_hit_clones.items())
+            (k, list(v)) for (k, v) in sample_to_hit_clones.items())
+
+        all_clones = set()
+        for clones in self.sample_to_hit_clones.values():
+            all_clones.update(clones)
 
         self.clone_by_sample_hits_matrix = pandas.DataFrame(
             index=sorted(all_clones),

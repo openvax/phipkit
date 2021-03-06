@@ -45,3 +45,15 @@ def reconstruct_antigen_sequences(blast_df):
         antigen_sequences[title][hit_from - 1: hit_to] = hseq.encode('ascii')
     antigen_sequences = antigen_sequences.map(lambda arr: arr.decode())
     return antigen_sequences
+
+
+def hits_to_dict(hits_df):
+    """
+    Given a hits_df, return a dict of sample id -> list of hits
+    """
+    sample_to_clones = {}
+    for sample, sub_hits_df in hits_df.groupby("sample_id"):
+        sample_to_clones[sample] = sub_hits_df[
+            ["clone1", "clone2"]
+        ].stack().unique()
+    return sample_to_clones

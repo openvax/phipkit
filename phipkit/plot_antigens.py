@@ -20,7 +20,7 @@ import pandas
 from matplotlib import pyplot
 from matplotlib.backends.backend_pdf import PdfPages
 
-from . common import say
+from .common import say, hits_to_dict
 from .antigen_analysis import AntigenAnalysis
 
 parser = argparse.ArgumentParser(
@@ -121,8 +121,9 @@ def plot_antigens(blast_df, hits_df, antigens_df, out, include_redundant=False):
 
     analyzer = AntigenAnalysis(
         blast_df=blast_df,
-        hits_df=hits_df,
-        antigens_df=antigens_df)
+        antigens_df=antigens_df,
+        sample_to_hit_clones=hits_to_dict(hits_df))
+
 
     say("Generating plots")
     antigens = antigens_df.antigen.unique()

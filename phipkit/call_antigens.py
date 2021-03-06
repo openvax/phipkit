@@ -65,7 +65,7 @@ tqdm.monitor_interval = 0  # see https://github.com/tqdm/tqdm/issues/481
 
 import pandas
 
-from . common import say, reconstruct_antigen_sequences
+from .common import say, reconstruct_antigen_sequences, hits_to_dict
 
 parser = argparse.ArgumentParser(
     description=__doc__,
@@ -166,18 +166,6 @@ def run(argv=sys.argv[1:]):
     say("Writing overlap hits.")
     results_df.to_csv(args.out, index=False)
     say("Wrote: ", args.out)
-
-
-def hits_to_dict(hits_df):
-    """
-    Given a hits_df, return a dict of sample id -> list of hits
-    """
-    sample_to_clones = {}
-    for sample, sub_hits_df in hits_df.groupby("sample_id"):
-        sample_to_clones[sample] = sub_hits_df[
-            ["clone1", "clone2"]
-        ].stack().unique()
-    return sample_to_clones
 
 
 def find_consensus(sequences, threshold=0.7):

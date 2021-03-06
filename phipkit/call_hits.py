@@ -45,7 +45,7 @@ tqdm.monitor_interval = 0  # see https://github.com/tqdm/tqdm/issues/481
 
 import pandas
 
-from . common import say
+from .common import say
 
 DEFAULTS = {
     'fdr': 0.01,
