@@ -18,3 +18,12 @@ install:
   - pip install .
 script:
   - pytest
+deploy:
+  provider: pypi
+  skip_existing: true
+  distributions: sdist bdist_wheel
+  username: "__token__"
+  password:
+    secure: "tWYi8SYXY1fe1Vw4HPGOtAf5fBge6nCoXWzg9F52q3RV/dMQnWkR92BAHMxfkXOnzBIX6753IYXng+c7Fh+fwxvsc1nlzU/u/o+ra+XfvhRdyqDfllBXrDfRhoAU6xQPKweMon5xWvsEshhlta9aIjNxx40OU7hxn7HLsLPT3sC+L03NQH0EaptLvRFdQpBiecGUmmkyLrRWZ661/6cLf+J4Xsn8PFWDXMSD0BgcgkXY5FhOVh3NLW9/xrtDvT6C3sauu/+bzGXK1iCmeLyIjORw90/miKzZDrEORva3Vj/HE6vrFHRweNEW1WE8W+DfTBhX5Q4W/QNTpTQG8vU+YB6SoB28D6UwFLAGd+zsE+r96FzoI8xHNWKaStUw4z2zSZkjSWVibCtH47GCEbfmUCzruGb/LWaJ3d9+x74IymjhcXlVcN28rWEAsZub9FJ/df0D78W92fRO1i89NdK2cgxaexdo+f1jjsaHlzXPNxUsFDY4yhcChGcjcvans2yXxPMgtlH/znBCE48SnUpOVINL6toB0ZI2hlFPk8QfO1L0ttk8i0KvYy/cQbFLdwAB9+zWfM/xCTRxbBo+/u8jGSh/eWmaGh8DwF5Xa4YzmHxyd4Pq3p1k2gxYEtH7EeEyrn+cHxw+7ZrFFrzLu/hR2PDFrQ2omgfWn7nLWmX29qU="
+  on:
+    tags: true
