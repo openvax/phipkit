@@ -38,8 +38,8 @@ any recent version will work.
 You can run the phipkit unit tests with:
 
 ```
-$ pip install nose
-$ nosetests -sv test/
+$ pip install pytest
+$ pytest
 ```
 
 

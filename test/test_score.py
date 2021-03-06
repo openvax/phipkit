@@ -1,5 +1,3 @@
-from nose.tools import eq_
-from numpy.testing import assert_equal
 import numpy
 import pandas
 
@@ -47,5 +45,5 @@ def test_basic():
             print(counts_df.loc[sort_series.head(5).index])
 
     max_scores = results.idxmax()
-    assert_equal(max_scores["sample_a"], "clone_0")
-    assert_equal(max_scores["sample_b"], "clone_1")
+    assert max_scores["sample_a"] == "clone_0"
+    assert max_scores["sample_b"] == "clone_1"

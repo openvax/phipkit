@@ -1,7 +1,3 @@
-from nose.tools import eq_
-from numpy.testing import assert_equal
-from nose.tools import eq_, assert_less, assert_greater, assert_almost_equal, assert_in
-
 import random
 import tempfile
 import os
@@ -15,7 +11,7 @@ from phipkit.call_hits import call_hits
 from phipkit.call_antigens import call_antigens, hits_to_dict
 from phipkit.plot_antigens import plot_antigens
 
-#random.seed(42)
+random.seed(42)
 numpy.random.seed(42)
 
 TEST_PROTEINS = {
@@ -142,11 +138,10 @@ def test_integrated(save_dir=None):
 
     pairwise_blast_without_self_df = pairwise_blast_df.loc[
         pairwise_blast_df.clone != pairwise_blast_df.title]
-    assert_greater(
+    assert (
         pairwise_blast_without_self_df.loc[
             pairwise_blast_without_self_df.clone.str.contains("SPECIAL")
-        ].title.nunique(),
-        2)
+        ].title.nunique()) > 2
 
     with tempfile.NamedTemporaryFile(mode="w") as fd:
         for (key, value) in TEST_PROTEINS.items():
@@ -213,7 +208,7 @@ def test_integrated(save_dir=None):
     print(hits_df)
     print("False discoveries:", (~hits_df.expected).sum())
     print("False discovery rate", 1 - hits_df.expected.mean())
-    yield assert_less, 1 - hits_df.expected.mean(), 0.5
+    assert 1 - hits_df.expected.mean() < 0.5
 
     epitopes_df["discovered"] = [
         len(hits_df.loc[
@@ -229,7 +224,7 @@ def test_integrated(save_dir=None):
     print(epitopes_df)
     print("Failed to discover", (~epitopes_df.discovered).sum())
     print("Failed to discover rate", (~epitopes_df.discovered).mean())
-    yield assert_less, (~epitopes_df.discovered).mean(), 0.5
+    assert (~epitopes_df.discovered).mean() < 0.5
 
     print("Calling antigens")
     antigens_df = call_antigens(reference_blast_df, hits_to_dict(hits_df))
@@ -259,7 +254,7 @@ def test_integrated(save_dir=None):
     fdr = (quality_antigens_df.expected == "").mean()
     print("Quality antigens:")
     print(quality_antigens_df)
-    yield assert_less, fdr, 0.35
+    assert fdr < 0.35
 
     # Check if we found our minimal epitopes. Exclude the special ones, because
     # they don't have a corresponding protein.
@@ -279,17 +274,11 @@ def test_integrated(save_dir=None):
         for _, row in minimal_epitopes_df.iterrows()
     ]
     print(minimal_epitopes_df)
-    yield assert_greater, minimal_epitopes_df.discovered.mean(), 0.8
+    assert minimal_epitopes_df.discovered.mean() > 0.7
 
     # Check that S and S_redundant are called as non-redundant and redundant
-    yield (
-        assert_equal,
-        antigens_df.loc[antigens_df.antigen == "S"].redundant.unique(),
-        [False])
-    yield (
-        assert_equal,
-        antigens_df.loc[antigens_df.antigen == "S_redundant"].redundant.unique(),
-        [True])
+    assert antigens_df.loc[antigens_df.antigen == "S"].redundant.unique() == [False]
+    assert antigens_df.loc[antigens_df.antigen == "S_redundant"].redundant.unique() == [True]
 
     # Call using the pairwise reference and check that we recover the special
     # epitope.
@@ -300,9 +289,9 @@ def test_integrated(save_dir=None):
     sample_b = antigens_pairwise_df.loc[
         (antigens_pairwise_df.sample_id == "sample_b")
     ]
-    yield assert_in, "SPECIAL_1", sample_b.antigen.unique()
-    yield assert_in, "SPECIAL_2", sample_b.antigen.unique()
-    yield assert_in, "SPECIAL_3", sample_b.antigen.unique()
+    assert "SPECIAL_1" in sample_b.antigen.unique()
+    assert "SPECIAL_2" in sample_b.antigen.unique()
+    assert "SPECIAL_3" in sample_b.antigen.unique()
 
     # Test plotting of antigens
     out = "/tmp/phipkit.antigen_plots.pdf"
@@ -313,9 +302,8 @@ def test_integrated(save_dir=None):
         hits_df=hits_df,
         antigens_df=antigens_df,
         out=out)
-    yield assert_equal, os.path.exists(out), True
+    assert os.path.exists(out)
 
-    #import ipdb ; ipdb.set_trace()
 
 
 if __name__ == "__main__":
@@ -329,5 +317,4 @@ if __name__ == "__main__":
         help="Write input files to DIR.")
 
     args = parser.parse_args(sys.argv[1:])
-
-    yields = list(test_integrated(save_dir=args.save_dir))
+    test_integrated(save_dir=args.save_dir)
