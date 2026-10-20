@@ -2,7 +2,7 @@
 phipkit - analysis package for Phage Immunoprecipitation Sequencing (phip-seq)
 """
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 from . import antigen_analysis
 from . import call_antigens
 from . import call_hits

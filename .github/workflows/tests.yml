@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install BLAST and Python dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ncbi-blast+
+          python -m pip install --upgrade pip
+          python -m pip install -e . pytest build twine
+          python -m pip check
+      - name: Run tests
+        run: MPLBACKEND=Agg python -m pytest test -q
+      - name: Check release artifacts
+        run: |
+          python -m build
+          python -m twine check --strict dist/*
