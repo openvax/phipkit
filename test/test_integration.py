@@ -1,9 +1,11 @@
 import random
+import shutil
 import tempfile
 import os
 
 import numpy
 import pandas
+import pytest
 
 from phipkit.blast import run_blast
 from phipkit.score import compute_scores
@@ -74,6 +76,10 @@ TEST_PROTEINS = {
 TEST_PROTEINS["S_redundant"] = TEST_PROTEINS["S"]
 
 
+@pytest.mark.skipif(
+    not all(shutil.which(name) for name in ("makeblastdb", "blastp")),
+    reason="NCBI BLAST executables are not installed",
+)
 def test_integrated(save_dir=None):
     """
     Run the integration test.

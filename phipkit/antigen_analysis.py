@@ -195,7 +195,7 @@ class AntigenAnalysis(object):
         title = antigen.split("OS")[0].strip()
         title += "\nHits in %d of %d clones" % (
             self.clone_by_sample_hits_matrix.reindex(
-                all_coverage_by_clone.index).fillna(0)[all_samples].any(1).sum(),
+                all_coverage_by_clone.index).fillna(0)[all_samples].any(axis=1).sum(),
             len(all_coverage_by_clone))
 
         pyplot.suptitle(title)

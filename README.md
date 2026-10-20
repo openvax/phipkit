@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/openvax/phipkit.svg?branch=main)](https://travis-ci.com/openvax/phipkit)
+[![Tests](https://github.com/openvax/phipkit/actions/workflows/tests.yml/badge.svg)](https://github.com/openvax/phipkit/actions/workflows/tests.yml)
 
 # phipkit
 PhIP-seq data analysis toolkit
@@ -15,6 +15,8 @@ control comparisons or other analyses appropriate to the study.
 
 
 ## Installation
+
+PhIPKit requires Python 3.11 or newer.
 
 All dependencies except BLAST (required by `phipkit-blast` command) can be
 installed by pip:
